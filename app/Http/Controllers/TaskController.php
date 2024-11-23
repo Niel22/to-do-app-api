@@ -94,6 +94,13 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+
+        return response()->json([
+            'success' => true,
+            'status' => 201,
+            'message' => 'Task Deleted'
+        ], 201);
+        
     }
 }

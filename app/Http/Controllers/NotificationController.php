@@ -40,19 +40,19 @@ class NotificationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Notification $notification)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Notification $notification)
+    public function read( Notification $notification)
     {
-        //
+        $notification->update([
+            'isRead' => !$notification->isRead
+        ]);
+
+        return response()->json([
+            'success' => 200,
+            'message' => "Notification " . ($notification->isRead ? "marked as read" : "marked as unread"),
+            'notification' => $notification
+        ], 201);
     }
 
     /**

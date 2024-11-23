@@ -5,6 +5,7 @@ use App\Http\Controllers\deviceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dummyAPI;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 
 Route::get('/user', function (Request $request) {
@@ -21,8 +22,12 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::group(['middleware' => 'auth:sanctum'], function(){
 
+    // User Profile
     Route::get('profile', [UserController::class, 'getProfile']);
     Route::post('update', [UserController::class, 'updateProfile']);
+
+    // Task
+    Route::apiResource('task', TaskController::class);
 
 
     Route::post('auth/logout', [AuthController::class, 'logout']);

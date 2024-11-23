@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
     // User Profile
     Route::get('profile', [UserController::class, 'getProfile']);
-    Route::post('profile/update', [UserController::class, 'updateProfile']);
+    Route::put('profile/update', [UserController::class, 'updateProfile']);
 
     // Task
     Route::apiResource('task', TaskController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
@@ -34,8 +34,10 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('tasks/completed', [TaskController::class, 'completed']);
 
     // Notofications
+    Route::get('notifications/count', [NotificationController::class, 'count']);
     Route::get('notifications/{notification}', [NotificationController::class, 'show']);
-    Route::get('notification/{notification}/read', [NotificationController::class, 'read']);
+    Route::put('notifications/{notification}', [NotificationController::class, 'read']);
+    Route::delete('notification', [NotificationController::class, 'destroy']);
 
 
     Route::post('auth/logout', [AuthController::class, 'logout']);

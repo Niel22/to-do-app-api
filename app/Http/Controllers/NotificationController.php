@@ -7,41 +7,22 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function count()
     {
-        //
+        return response()->json([
+            'success' => true,
+            'status' => 200,
+            'message' => 'Message retrieved successfully',
+            'count' => Notification::count()
+        ], 200);
+        
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(Notification $notification)
     {
         return $notification;
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function read( Notification $notification)
     {
         $notification->update([
@@ -54,12 +35,29 @@ class NotificationController extends Controller
             'notification' => $notification
         ], 201);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Notification $notification)
+    
+    public function destroy()
     {
-        //
+        $notifications = Notification::all();
+
+        if ($notifications->count() > 0) {
+            foreach ($notifications as $notification) {
+                $notification->delete();
+            }
+
+            return response()->json([
+                'success' => 200,
+                'message' => "Notifications deleted",
+                'notification' => $notifications
+            ], 200);
+        }
+
+        return response()->json([
+            'success' => 400,
+            'message' => "No notifications to delete",
+            'notification' => $notifications
+        ], 400);
+
+
     }
 }

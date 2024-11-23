@@ -27,7 +27,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('update', [UserController::class, 'updateProfile']);
 
     // Task
-    Route::apiResource('task', TaskController::class);
+    Route::apiResource('task', TaskController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
+    Route::get('/task/{task}/completed', [TaskController::class, 'complete']);
 
 
     Route::post('auth/logout', [AuthController::class, 'logout']);

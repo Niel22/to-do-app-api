@@ -103,4 +103,19 @@ class TaskController extends Controller
         ], 201);
         
     }
+
+    public function complete(Task $task){
+
+        $task->update([
+            'completed' => true
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'status' => 201,
+            'task' => $task,
+            'message' => 'Task Marked as completed'
+        ], 201);
+
+    }
 }

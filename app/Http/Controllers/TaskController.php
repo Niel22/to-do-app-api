@@ -57,20 +57,36 @@ class TaskController extends Controller
         return $task;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $rules = [
+            'task' => ['required', 'string']
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()){
+            return $validator->errors();
+        }
+
+        $data = $validator->validated();
+
+        $result = $task->update([
+            'task' => $data['task']
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'status' => 201,
+            'task' => $task,
+            'message' => 'Task Updated successfully'
+        ], 201);
+
+
     }
 
     /**

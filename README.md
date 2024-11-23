@@ -1,4 +1,4 @@
-cat <<EOL > README.md
+
 # 📝 To-Do List API
 
 This project provides a simple yet effective API to help users manage their daily tasks and notifications efficiently.
@@ -29,4 +29,3 @@ This project provides a simple yet effective API to help users manage their dail
 
 In today’s fast-paced world, staying organized is key to productivity. This API offers all the essential features for a basic to-do list application, along with notification support to ensure you never miss a task update.
 
-EOL

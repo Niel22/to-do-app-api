@@ -5,6 +5,7 @@ use App\Http\Controllers\deviceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dummyAPI;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 
@@ -30,6 +31,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::apiResource('task', TaskController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
     Route::get('task/{task}/complete', [TaskController::class, 'complete']);
     Route::get('tasks/completed', [TaskController::class, 'completed']);
+
+    // Notofications
+    Route::get('notifications/{notification}', [NotificationController::class, 'show']);
 
 
     Route::post('auth/logout', [AuthController::class, 'logout']);

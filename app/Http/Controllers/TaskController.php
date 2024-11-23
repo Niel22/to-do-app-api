@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,11 @@ class TaskController extends Controller
 
         $task = $user->task()->create([
             'task' => $data['task']
+        ]);
+
+        Notification::create([
+            'title' => "Task Created",
+            'message' => $user->name . " Added a new Task",
         ]);
 
         return response()->json([
@@ -79,6 +85,11 @@ class TaskController extends Controller
             'task' => $data['task']
         ]);
 
+        Notification::create([
+            'title' => "Task Created",
+            'message' => $task->user->name . " Updated an existing Task",
+        ]);
+
         return response()->json([
             'success' => true,
             'status' => 201,
@@ -94,7 +105,14 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        $user = $task->user->name;
+
         $task->delete();
+
+        Notification::create([
+            'title' => "Task Created",
+            'message' => $user . " Added a new Task",
+        ]);
 
         return response()->json([
             'success' => true,
@@ -106,15 +124,29 @@ class TaskController extends Controller
 
     public function complete(Task $task){
 
-        $task->update([
-            'completed' => true
-        ]);
+        if (!$task->completed) {
+            $task->update([
+                'completed' => true
+            ]);
+
+            Notification::create([
+                'title' => "Task Created",
+                'message' => $task->user->name . " Marked a task as completed",
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'status' => 201,
+                'task' => $task,
+                'message' => 'Task Marked as completed'
+            ], 201);
+        }
 
         return response()->json([
             'success' => true,
             'status' => 201,
             'task' => $task,
-            'message' => 'Task Marked as completed'
+            'message' => 'Task has been marked completed already'
         ], 201);
 
     }

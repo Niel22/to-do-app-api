@@ -118,4 +118,9 @@ class TaskController extends Controller
         ], 201);
 
     }
+
+    public function completed(){
+
+        return Auth::user()->task()->where('completed', 1)->get();
+    }
 }

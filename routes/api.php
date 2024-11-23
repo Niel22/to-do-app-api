@@ -24,11 +24,12 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
     // User Profile
     Route::get('profile', [UserController::class, 'getProfile']);
-    Route::post('update', [UserController::class, 'updateProfile']);
+    Route::post('profile/update', [UserController::class, 'updateProfile']);
 
     // Task
     Route::apiResource('task', TaskController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
-    Route::get('/task/{task}/completed', [TaskController::class, 'complete']);
+    Route::get('task/{task}/complete', [TaskController::class, 'complete']);
+    Route::get('tasks/completed', [TaskController::class, 'completed']);
 
 
     Route::post('auth/logout', [AuthController::class, 'logout']);
